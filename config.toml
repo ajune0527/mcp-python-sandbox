@@ -1,0 +1,36 @@
+[server]
+# 服务器配置
+host = "0.0.0.0"
+port = 8000
+
+[docker]
+# 默认的docker镜像名称
+default_image = "python-sandbox:latest"
+# dockerfile路径
+dockerfile_path = "sandbox_images/Dockerfile"
+# 是否检查dockerfile更改并在需要时重建
+check_dockerfile_changes = true
+# 用于存储上次构建信息的文件
+build_info_file = ".docker_build_info"
+# 挂载的目录
+open_mount_directory = true
+# 
+container_work_dir = "/app/results"
+
+[logging]
+# 日志配置
+level = "INFO"
+# 日志文件路径
+log_file = "./logs/mcp_sandbox.log"
+# 是否使用结构化日志格式（JSON格式）
+use_structured_format = true
+# 日志文件最大大小（字节），默认10MB
+max_file_size = 10485760
+# 日志文件备份数量
+backup_count = 5
+# 是否同时输出到控制台
+console_output = true
+
+[mirror]
+# 包配置
+pypi_index_url = "https://pypi.tuna.tsinghua.edu.cn/simple"

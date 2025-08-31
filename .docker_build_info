@@ -1,0 +1,5 @@
+{
+  "dockerfile_hash": "9d79a4e80581e591f19ebbece662514dd45f3a608a2a937c10ad897611b49b85",
+  "build_time": "2025-08-30T15:37:25.850113",
+  "image_name": "python-sandbox:latest"
+}
