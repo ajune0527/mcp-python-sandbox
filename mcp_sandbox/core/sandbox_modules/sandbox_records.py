@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict, Any
+from typing import List, Dict, Any
 
 from mcp_sandbox.core.sandbox_modules import SandboxManager
 

@@ -1,7 +1,7 @@
-from typing import List, Optional, Dict, Any
-import tarfile
 import io
+import tarfile
 from pathlib import Path
+from typing import List, Dict, Any
 
 from mcp_sandbox.core.sandbox_modules import SandboxManager
 

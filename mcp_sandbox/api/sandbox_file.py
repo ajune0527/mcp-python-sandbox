@@ -76,7 +76,7 @@ def get_sandbox_file(
 def get_file_by_sandbox_id(sandbox_id, file_path):
     # 获取容器
     container_result = safe_execute(
-        lambda: sandbox_manager.get_container_by_sandbox_id(sandbox_id),
+        lambda: sandbox_manager.get_container_by_sandbox_id_or_name(sandbox_id),
         default_return=(None, {"message": "获取容器失败"}),
         context={"operation": "get_container", "sandbox_id": sandbox_id}
     )
@@ -158,7 +158,7 @@ def get_file_by_sandbox_id(sandbox_id, file_path):
 def get_file_by_sandbox_name(sandbox_name, file_path):
     # 获取容器
     container_result = safe_execute(
-        lambda: sandbox_manager.get_container_by_sandbox_id(sandbox_name),
+        lambda: sandbox_manager.get_container_by_sandbox_id_or_name(sandbox_name),
         default_return=(None, {"message": "获取容器失败"}),
         context={"operation": "get_container", "sandbox_name": sandbox_name}
     )
@@ -183,7 +183,7 @@ def get_file_by_sandbox_name(sandbox_name, file_path):
         file_path = f"{path.absolute()}/{sandbox_name}/{file_path}"
         # 这个文件是在物理机，不需要从沙盒中读取
         with open(file_path, 'rb') as f:
-            fileobj = f.read()
+            file = f.read()
             # 文件名
             filename = os.path.basename(file_path)
 
@@ -192,8 +192,8 @@ def get_file_by_sandbox_name(sandbox_name, file_path):
             headers = {"Content-Disposition": f"inline; filename={filename}"}
 
             # 内存文件流
-            fileobj = io.BytesIO(fileobj)
-            return StreamingResponse(fileobj, media_type=mime_type, headers=headers)
+            file = io.BytesIO(file)
+            return StreamingResponse(file, media_type=mime_type, headers=headers)
     except Exception as e:
 
         raise FileSystemError(
