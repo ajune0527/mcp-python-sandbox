@@ -5,13 +5,14 @@ import threading
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Optional, Any, Tuple
+from typing import Dict, Optional, Any
 
 import docker
 from docker.errors import DockerException, ImageNotFound, ContainerError, APIError
 
-from mcp_sandbox.utils.config import logger, DEFAULT_DOCKER_IMAGE, OPEN_MOUNT_DIRECTORY, DEFAULT_CONTAINER_WORK_DIR, \
-    DEFAULT_LOG_FILE, config
+from mcp_sandbox.utils.config import (DEFAULT_DOCKER_IMAGE, DOCKER_MEM_SWAP_LIMIT, DOCKER_MEM_LIMIT,
+                                      OPEN_MOUNT_DIRECTORY, DEFAULT_CONTAINER_WORK_DIR)
+from mcp_sandbox.utils.config import logger, DEFAULT_LOG_FILE, config
 from mcp_sandbox.utils.exceptions import (
     ExceptionHandler, DockerError, handle_exceptions, safe_execute
 )
@@ -462,8 +463,8 @@ class SandboxManager:
                 "detach": True,
                 "working_dir": DEFAULT_CONTAINER_WORK_DIR,
                 "labels": {"python-sandbox": "true"},
-                "mem_limit": '1g',
-                "memswap_limit": '1g',
+                "mem_limit": DOCKER_MEM_LIMIT,
+                "memswap_limit": DOCKER_MEM_SWAP_LIMIT,
                 "network_mode": 'bridge',
                 "privileged": False,
                 "cap_drop": ['ALL'],

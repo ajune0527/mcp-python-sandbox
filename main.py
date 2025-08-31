@@ -38,7 +38,6 @@ def main():
     # 初始化沙箱插件
     sandbox_plugin = SandboxToolsPlugin()
 
-    # Create FastAPI app
     app = FastAPI(title="MCP Sandbox")
 
     # Add CORS middleware
@@ -55,7 +54,7 @@ def main():
 
     # 设置FastAPI应用的lifespan
     app.router.lifespan_context = mcp_app.lifespan
-    
+
     # 输出所有的路由
     for route in app.routes:
         print(f"Route: {route.path}")

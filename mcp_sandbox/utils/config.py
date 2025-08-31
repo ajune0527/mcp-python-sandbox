@@ -138,6 +138,8 @@ HOST = os.environ.get("APP_HOST", config_manager.get("server.host", "0.0.0.0"))
 PORT = int(os.environ.get("APP_PORT", config_manager.get("server.port", 8000)))
 DEFAULT_DOCKER_IMAGE = config_manager.get("docker.default_image", "python-sandbox:latest")
 OPEN_MOUNT_DIRECTORY = config_manager.get("docker.open_mount_directory", False)
+DOCKER_MEM_LIMIT = config_manager.get("docker.mem_limit", '1g')
+DOCKER_MEM_SWAP_LIMIT = config_manager.get("docker.memswap_limit", '1g')
 DEFAULT_CONTAINER_WORK_DIR = config_manager.get("docker.container_work_dir", "/app/results")
 DEFAULT_LOG_FILE = config_manager.get("logging.log_file", "./logs/mcp_sandbox.log")
 

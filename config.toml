@@ -16,6 +16,8 @@ build_info_file = ".docker_build_info"
 open_mount_directory = true
 # 
 container_work_dir = "/app/results"
+mem_limit = '1g'
+memswap_limit = '1g'
 
 [logging]
 # 日志配置
