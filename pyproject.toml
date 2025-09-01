@@ -1,5 +1,5 @@
 [project]
-name = "mcp-sandbox"
+name = "mcp-python-sandbox"
 version = "0.1.0"
 description = "Safe sandboxes for llms"
 readme = "README.md"
@@ -20,4 +20,4 @@ dependencies = [
 ]
 
 [project.scripts]
-mcp-sandbox = "main:main"
+mcp-python-sandbox = "main:main"
