@@ -9,7 +9,7 @@ class SandboxEnvironment:
 
     def __init__(self, base_image: str = DEFAULT_DOCKER_IMAGE):
         """初始化沙盒环境
-        
+
         Args:
             base_image: 基础Docker镜像名称
         """
@@ -35,7 +35,7 @@ class SandboxEnvironment:
         return self.file_ops.get_machine_file_link(sandbox_name, file_path)
 
     def upload_file_to_sandbox(self, sandbox_id: str, local_file_path: str, dest_path: str = "/app/results") -> Dict[
-        str, Any]:
+            str, Any]:
         return self.file_ops.upload_file_to_sandbox(sandbox_id, local_file_path, dest_path)
 
     # 代理方法 - 包管理

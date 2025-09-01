@@ -3,6 +3,7 @@ import mimetypes
 import os
 import tarfile
 from pathlib import Path
+from urllib.parse import quote
 
 from fastapi import APIRouter, Query
 from fastapi.responses import StreamingResponse
@@ -139,7 +140,7 @@ def get_file_by_sandbox_id(sandbox_id, file_path):
 
             mime_type, _ = mimetypes.guess_type(member.name)
             mime_type = mime_type or "application/octet-stream"
-            headers = {"Content-Disposition": f"inline; filename={member.name}"}
+            headers = {"Content-Disposition":f"inline; filename*=UTF-8''{quote(member.name)}"}
 
             return StreamingResponse(fileobj, media_type=mime_type, headers=headers)
 
@@ -189,7 +190,7 @@ def get_file_by_sandbox_name(sandbox_name, file_path):
 
             mime_type, _ = mimetypes.guess_type(file_path)
             mime_type = mime_type or "application/octet-stream"
-            headers = {"Content-Disposition": f"inline; filename={filename}"}
+            headers = {"Content-Disposition":f"inline; filename*=UTF-8''{quote(filename)}"}
 
             # 内存文件流
             file = io.BytesIO(file)
