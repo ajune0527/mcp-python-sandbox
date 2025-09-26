@@ -205,3 +205,7 @@ def get_file_by_sandbox_name(sandbox_name, file_path):
                 "error": str(e)
             }
         ) from e
+
+@router.get("/check")
+async def check():
+    return 'success'
