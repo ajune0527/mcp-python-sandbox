@@ -16,6 +16,17 @@ def configure_app(app: FastAPI, sandbox_plugin: SandboxToolsPlugin):
     Returns:
         The MCP app instance for lifespan configuration
     """
+    # 覆盖默认的 Swagger UI 页面，强制使用相对路径加载 openapi.json
+    @app.get("/docs", include_in_schema=False)
+    async def custom_swagger_ui_html():
+        return get_swagger_ui_html(
+            openapi_url="./openapi.json",  # 关键：使用相对路径（相对于 /docs 页面）
+            title=app.title + " - Swagger UI",
+            oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+            swagger_js_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js",
+            swagger_css_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
+        )
+
 
     # Mount sandbox file access routes
     app.include_router(sandbox_file_router)
