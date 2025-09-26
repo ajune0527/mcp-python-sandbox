@@ -35,7 +35,7 @@ class SandboxEnvironment:
         return self.file_ops.get_machine_file_link(sandbox_name, file_path)
 
     def upload_file_to_sandbox(self, sandbox_id: str, local_file_path: str, dest_path: str = "/app/results") -> Dict[
-            str, Any]:
+        str, Any]:
         return self.file_ops.upload_file_to_sandbox(sandbox_id, local_file_path, dest_path)
 
     # 代理方法 - 包管理
@@ -111,9 +111,5 @@ class SandboxToolsPlugin:
         def execute_terminal_command(sandbox_id: str, command: str) -> Dict[str, Any]:
             return self.sandbox_env.execute_terminal_command(sandbox_id, command)
 
-        @self.mcp.tool(
-            name="upload_file_to_sandbox",
-            description="将本地文件上传到指定的沙盒。参数: sandbox_id (string), local_file_path (string), dest_path (string, 可选, 默认: /app/results)。"
-        )
         def upload_file_to_sandbox(sandbox_id: str, local_file_path: str, dest_path: str = "/app/results") -> dict:
             return self.sandbox_env.upload_file_to_sandbox(sandbox_id, local_file_path, dest_path)
