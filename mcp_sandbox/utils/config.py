@@ -142,6 +142,8 @@ DOCKER_MEM_LIMIT = config_manager.get("docker.mem_limit", '1g')
 DOCKER_MEM_SWAP_LIMIT = config_manager.get("docker.memswap_limit", '1g')
 DEFAULT_CONTAINER_WORK_DIR = config_manager.get("docker.container_work_dir", "/app/results")
 DEFAULT_LOG_FILE = config_manager.get("logging.log_file", "./logs/mcp_sandbox.log")
+# 是否启动新的线程执行镜像的创建
+CREATE_IMAGE_IN_THREAD = config_manager.get("docker.create_image_in_thread", False)
 
 # PyPI镜像配置
 PYPI_INDEX_URL = config_manager.get("mirror.pypi_index_url", "https://pypi.org/simple/")

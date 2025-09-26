@@ -18,6 +18,8 @@ open_mount_directory = true
 container_work_dir = "/app/results"
 mem_limit = '1g'
 memswap_limit = '1g'
+# 是否在新的线程中执行镜像的创建
+create_image_in_thread = true
 
 [logging]
 # 日志配置

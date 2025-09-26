@@ -11,7 +11,7 @@ import docker
 from docker.errors import DockerException, ImageNotFound, ContainerError, APIError
 
 from mcp_sandbox.utils.config import (DEFAULT_DOCKER_IMAGE, DOCKER_MEM_SWAP_LIMIT, DOCKER_MEM_LIMIT,
-                                      OPEN_MOUNT_DIRECTORY, DEFAULT_CONTAINER_WORK_DIR)
+                                      OPEN_MOUNT_DIRECTORY, DEFAULT_CONTAINER_WORK_DIR, CREATE_IMAGE_IN_THREAD)
 from mcp_sandbox.utils.config import logger, DEFAULT_LOG_FILE, config
 from mcp_sandbox.utils.exceptions import (
     ExceptionHandler, DockerError, handle_exceptions, safe_execute
@@ -45,11 +45,18 @@ class SandboxManager:
         self.session_sandbox_map: Dict[str, str] = {}
         self.package_install_status: Dict[str, Dict[str, Any]] = {}
 
+        # 镜像创建线程
+        self.image_creation_thread: Optional[threading.Thread] = None
+
         # 初始化Docker客户端
         self._init_docker_client()
 
-        # 确保镜像存在
-        self._ensure_sandbox_image()
+        if CREATE_IMAGE_IN_THREAD:
+            # 启动线程，后台执行镜像的创建
+            self._start_image_creation_thread()
+        else:
+            # 确保镜像存在
+            self._ensure_sandbox_image()
 
         # 检查是否需要重置所有容器
         if config["server"].get("reset_all_containers", False):
@@ -814,3 +821,11 @@ class SandboxManager:
         except Exception as e:
             logger.error(f"Error in _get_running_sandbox for {sandbox_id}: {e}", exc_info=True)
             raise
+
+    def _start_image_creation_thread(self):
+        """启动线程，后台执行镜像的创建"""
+        if self.image_creation_thread is None or not self.image_creation_thread.is_alive():
+            self.logger.info("镜像创建线程已启动")
+            self.image_creation_thread = threading.Thread(target=self._ensure_sandbox_image)
+            self.image_creation_thread.start()
+            self.logger.info("镜像创建完成")
